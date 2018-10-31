@@ -1,21 +1,24 @@
 <%-- 
-    Document   : registrarImatge
-    Created on : 26-oct-2018, 10:55:19
+    Document   : modificarImatge
+    Created on : 31-oct-2018, 10:42:10
     Author     : oriol.nin
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
+     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Registrar Imatge</title>
     </head>
     <body>
         <div>
-            <h1 id="headerRegistreImatge">Registrar imatge</h1>
+            <h1 id="headerModicarImatge">Modificar Imatge</h1>
             <p id="dades"><strong>Introdueix les dades que es demanen a continuació</strong></p>
-            <form method="post" action="/RestAD/webresources/generic/register" id="registrarImatge">
+            <form method="post" action="/RestAD/webresources/generic/modify" id="modificarImatge">
+                <label for="id"><br>ID:</br></label>
+                <input type="text" name="id" id="id">
+                <br>
                 <label for="title"><br>Títol:<br></label>
                 <input type="text" name="title" id="title">
                 <br>
@@ -30,7 +33,7 @@
                 <label for="creation"><br>Data de creació:<br></label>
                 <input type="date" name="creation" id="creation">
                 <br>
-                <input type="submit" name="registrar" id="registrar" value="Registrar">
+                <input type="submit" name="modificar" id="registrar" value="Modificar">
                 <input type="reset" name="netejar" id="netejarQuestionari" value="Esborrar dades">
             </form>
         </div>

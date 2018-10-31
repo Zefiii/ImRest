@@ -15,7 +15,7 @@
         <div>
             <h1 id="headerRegistreImatge">Registrar imatge</h1>
             <p id="dades"><strong>Introdueix les dades que es demanen a continuació</strong></p>
-            <form method="post" action="/webresources/generic/register" id="registrarImatge">
+            <form method="post" action="/RestAD/webresources/generic/register" id="registrarImatge">
                 <label for="title"><br>Títol:<br></label>
                 <input type="text" name="title" id="title">
                 <br>
