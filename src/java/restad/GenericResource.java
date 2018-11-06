@@ -69,7 +69,7 @@ public class GenericResource {
             @FormParam("author") String author,
             @FormParam("creation") String crea_date){
          //TODO write your implementation code here:
-        
+         
         Connection conn = null;
         try {
             Class.forName("org.sqlite.JDBC");
@@ -80,8 +80,8 @@ public class GenericResource {
             Random ran = new Random();
             String id = String.valueOf(ran.nextInt(100)+1);
             //conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
-            conn = DriverManager.getConnection("jdbc:sqlite:F:\\windows\\ADPractica4\\loquesea.db");
-           //conn = DriverManager.getConnection("jdbc:sqlite:/Usuaris/annagarcia-nieto/Escriptori/basedades.db");
+           //conn = DriverManager.getConnection("jdbc:sqlite:F:\\windows\\ADPractica4\\loquesea.db");
+           conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
            PreparedStatement statement = conn.prepareStatement("insert into imagenes values (?, ?, ?, ?, ?, ? , ?)");
            statement.setString(1,id );
            statement.setString(2, "Jordi");
@@ -125,9 +125,9 @@ public class GenericResource {
             System.out.println("Error class.forname");
         }
         try{
-            conn = DriverManager.getConnection("jdbc:sqlite:F:\\windows\\ADPractica4\\loquesea.db");                
-            //conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
-           //conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
+           //conn = DriverManager.getConnection("jdbc:sqlite:F:\\windows\\ADPractica4\\loquesea.db");                
+           //conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
+           conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
            
            PreparedStatement statement = conn.prepareStatement("update imagenes set titulo = ?, descripcion = ?, palabras_clave = ?, autor = ? where id_imagen = ?;");
            statement.setString(1, title);
@@ -191,9 +191,9 @@ public class GenericResource {
                creacio = rs.getString("creacion");
                
                html = html + "<div><h2>" + titol +"</h2>"
-                       +"<p>Descripció: " + descripcio +"</p>"
+                       +"<p>Descripcio: " + descripcio +"</p>"
                        +"<p>Autor: " + autor +"</p>"
-                       +"<p>Data de creació: " + creacio +"</p></div></br></br>";
+                       +"<p>Data de creacio: " + creacio +"</p></div></br></br>";
            }
            html = html + "</body></html>";
            
@@ -231,10 +231,10 @@ public class GenericResource {
             System.out.println("Error class.forname");
         }
         try{
-            conn = DriverManager.getConnection("jdbc:sqlite:F:\\windows\\ADPractica4\\loquesea.db"); 
+            //conn = DriverManager.getConnection("jdbc:sqlite:F:\\windows\\ADPractica4\\loquesea.db"); 
             //conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
             //conn = DriverManager.getConnection("jdbc:sqlite:\\Users\\oriol\\OneDrive\\Escritorio\\loquesea.db");
-            //conn = DriverManager.getConnection("jdbc:sqlite:/Usuaris/annagarcia-nieto/Escriptori/basedades.db");
+            conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
             PreparedStatement statement =  conn.prepareStatement("select * from imagenes where id_imagen = ?");
             statement.setString(1, String.valueOf(id));
             ResultSet rs = statement.executeQuery();
