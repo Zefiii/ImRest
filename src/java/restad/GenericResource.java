@@ -149,6 +149,72 @@ public class GenericResource {
             return "<html><head/><body><h1>Modificacio Incorrecte :(!</h1></body></html>";
         }
     }
+    
+        
+    /**
+    * GET method to list images
+    * @return
+    */
+    @Path("list")
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    public String listImages () {
+        Connection conn = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Error class.forname");
+        }
+        try{
+           //conn = DriverManager.getConnection("jdbc:sqlite:F:\\windows\\ADPractica4\\loquesea.db");                
+           //conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
+           conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
+           
+           String id_imatge;
+           String titol;
+           String descripcio;
+           String clau;
+           String autor;
+           String creacio;
+           String html = "<html><head/><body><h1>Llistat Correcte :)!</h1>"; 
+           
+           PreparedStatement statement =  conn.prepareStatement("select * from imagenes");
+           
+           ResultSet rs = statement.executeQuery();
+
+           while(rs.next()){
+               titol = rs.getString("titulo");
+               id_imatge = rs.getString("id_imagen");
+               descripcio = rs.getString("descripcion");
+               clau = rs.getString("palabras_clave");
+               autor = rs.getString("autor");
+               creacio = rs.getString("creacion");
+               
+               html = html + "<div><h2>" + titol +"</h2>"
+                       +"<p>Descripció: " + descripcio +"</p>"
+                       +"<p>Autor: " + autor +"</p>"
+                       +"<p>Data de creació: " + creacio +"</p></div></br></br>";
+           }
+           html = html + "</body></html>";
+           
+           return html;
+           
+        } catch(SQLException e){
+              System.err.println(e.getMessage());
+        } 
+        finally{
+            try{
+                if(conn != null)
+                    conn.close();
+            } catch(SQLException e) {
+                // connection close failed.
+                System.err.println(e.getMessage());
+            }
+        }
+        
+        return "<html><head/><body><h1>Llistar Incorrecte :(!</h1></body></html>";
+    }
+    
     /**
      * @param id
      * @return
