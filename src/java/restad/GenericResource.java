@@ -138,11 +138,11 @@ public class GenericResource {
 
            statement.executeUpdate();
            return "<html><head/><body><h1>Modificacio Correcte :)!</h1>"
-                   + "<h2>Titol: "+ title +"</h2></br>"
-                   + "<h2>Autor: "+ author+ "</h2></br>"
-                   + "<p>"+ description + "</p></br>"
-                   + "<h2>Keywords: "+keywords+"</h2></br>"
-                   + "<h2>Data de creacio: " + creation + "</h2></body></html>";
+                   + "<p>Titol: " + title + "</p></br>"
+                   + "<p>Autor: " + author + "</p></br>"
+                   + "<p>" + description + "</p></br>"
+                   + "<p>Keywords: " + keywords + "</p></br>"
+                   + "<p>Data de creacio: " + creation + "</p></body></html>";
         }
         catch(SQLException e){
             System.out.println(e);

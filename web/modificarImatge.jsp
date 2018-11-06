@@ -15,7 +15,7 @@
         <div>
             <h1 id="headerModicarImatge">Modificar Imatge</h1>
             <p id="dades"><strong>Introdueix les dades que es demanen a continuació</strong></p>
-            <form method="post" action="/RestAD/webresources/generic/modify" id="modificarImatge">
+            <form method="post" action="webresources/generic/modify" id="modificarImatge">
                 <label for="id"><br>ID:</br></label>
                 <input type="text" name="id" id="id">
                 <br>
