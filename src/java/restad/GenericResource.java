@@ -150,6 +150,38 @@ public class GenericResource {
         }
     }
     
+    /**
+     * POST method to register a new image
+     * @param id
+     * @return
+     */
+    @Path("delete")
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.TEXT_HTML)
+    public String deleteImage (@FormParam ("id") String id) {
+        Connection conn = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Error class.forname");
+        }
+        try{
+           //conn = DriverManager.getConnection("jdbc:sqlite:F:\\windows\\ADPractica4\\loquesea.db");                
+           //conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
+           conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
+           
+           PreparedStatement statement =  conn.prepareStatement("delete from imagenes where id_imagen = ?");
+           statement.setString(1, id);
+           statement.executeUpdate();
+                      statement.executeUpdate();
+            return "<html><head/><body><h1>Esborrat Correcte :)!</h1></body></html>";
+        }
+        catch(SQLException ex){
+            System.out.println(ex);
+            return "<html><head/><body><h1>Esborrat Incorrecte :(!</h1></body></html>";
+        }
+    }
         
     /**
     * GET method to list images
