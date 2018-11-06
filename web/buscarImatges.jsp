@@ -12,10 +12,11 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <a href="buscarId.jsp" id="refToBuscarID">Buscar imatge per ID</a>
-        <a href="buscarAutor.jsp" id="refToBuscarAutor">Buscar imatge per Autor</a>
-        <a href="buscarTitol.jsp" id="refToBuscarTitol">Buscar imatge per Titol</a>
-        <a href="buscarData.jsp" id="refToBuscarData">Buscar imatge per Data</a>
+        <h1>Buscar imatges</h1>
+        <a href="buscarId.jsp" id="refToBuscarID">Buscar imatge per ID</a></br>
+        <a href="buscarAutor.jsp" id="refToBuscarAutor">Buscar imatge per Autor</a></br>
+        <a href="buscarTitol.jsp" id="refToBuscarTitol">Buscar imatge per Titol</a></br>
+        <a href="buscarData.jsp" id="refToBuscarData">Buscar imatge per Data</a></br>
         <a href="buscarKeyWords.jsp" id="refToBuscarKeyWords">Buscar imatge per praules clau</a>
     </body>
 </html>
