@@ -13,7 +13,7 @@
     </head>
     <body>
         <h1>Buscar imatges per Id</h1>
-        <form method="post" action="searchID" id="modificarImatge">
+        <form method="post" action="searchID" id="buscarID">
                 <label for="id"><br>ID:</br></label>
                 <input type="text" name="id" id="id">
                 <input type="submit" name="Submit">

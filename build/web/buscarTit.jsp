@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Buscar imatges per Id</h1>
+        <h1>Buscar imatges per Titol</h1>
         <form method="post" action="searchTitle" id="modificarImatge">
                 <label for="Titol"><br>Titol:</br></label>
                 <input type="text" name="title" id="id">
