@@ -443,6 +443,63 @@ public class GenericResource {
         return html;
     }
     /**
+     * GET mthod to search images by keywords
+     * @param keywords
+     * @param return
+     */
+    @Path("searchKeywords/{keywords}")
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    public String searchByKeywords(@PathParam("keywords") String keywords){
+        String html = htmini;
+        Connection conn = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Error class.forname");
+        }
+        try{
+            conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
+            //conn = DriverManager.getConnection("jdbc:sqlite:\\Users\\oriol\\OneDrive\\Escritorio\\loquesea.db");
+            //conn = DriverManager.getConnection("jdbc:sqlite:/Usuaris/annagarcia-nieto/Escriptori/basedades.db");
+            PreparedStatement statement =  conn.prepareStatement("select * from imagenes "); 
+            
+            
+            boolean trobat = false;
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                if(rs.getString("palabras_clave").contains(keywords)){
+                    trobat = true;
+                    html = html + "<div>";
+                    html = html + "<h2>Titol: " + rs.getString("titulo") + "</h2><br>";
+                    html = html + "<p>Autor: " + rs.getString("autor") + "<p><br>";
+                    html = html + "<p>" + rs.getString("descripcion") + "</p> <br>";
+                    html = html + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>";
+                    html = html + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>";
+                    html = html + "</div>";
+                }
+                while (rs.next()) {     
+                    if(rs.getString("palabras_clave").contains(keywords)){
+                        trobat = true;
+                        html = html + "<div>";
+                        html = html + "<h2>Titol: " + rs.getString("titulo") + "</h2><br>";
+                        html = html + "<p>Autor: " + rs.getString("autor") + "<p><br>";
+                        html = html + "<p>" + rs.getString("descripcion") + "</p> <br>";
+                        html = html + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>";
+                        html = html + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>";
+                        html = html + "</div>";
+                    } 
+                }
+                html = html + htmfini; 
+            }
+            else if(!trobat) return "<html></header><body><h1> No hi ha cap Imatge amb aquest autor o hi ha hagut un error</h1></body></html>";
+        } catch(SQLException e) {
+            System.out.println(e);
+            return "<html></header><body><h1> No hi ha cap Imatge amb aquest autor o hi ha hagut un error</h1></body></html>";
+        }  
+        return html;
+    }
+    /**
      * PUT method for updating or creating an instance of GenericResource
      * @param content representation for the resource
      */
