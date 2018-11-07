@@ -1,7 +1,7 @@
 <%-- 
-    Document   : buscarId
-    Created on : 31-oct-2018, 11:12:31
-    Author     : oriol.nin
+    Document   : buscarData
+    Created on : 07-nov-2018, 12:17:13
+    Author     : Oriol
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,14 +13,11 @@
     </head>
     <body>
         <h1>Buscar imatges per Id</h1>
-        <form method="post" action="searchID" id="modificarImatge">
-                <label for="id"><br>ID:</br></label>
-                <input type="text" name="id" id="id">
+        <form method="post" action="searchDate" id="modificarImatge">
+                <label for="date"><br>Data:</br></label>
+                <input type="text" name="date" id="date">
                 <input type="submit" name="Submit">
                 <br>
         </form>
     </body>
 </html>
-
-  
-    

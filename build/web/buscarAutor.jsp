@@ -1,7 +1,7 @@
 <%-- 
-    Document   : buscarId
-    Created on : 31-oct-2018, 11:12:31
-    Author     : oriol.nin
+    Document   : buscarAutor
+    Created on : 07-nov-2018, 12:58:30
+    Author     : Oriol
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -12,15 +12,12 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Buscar imatges per Id</h1>
-        <form method="post" action="searchID" id="modificarImatge">
-                <label for="id"><br>ID:</br></label>
-                <input type="text" name="id" id="id">
+        <h1>Buscar imatges per Autor</h1>
+        <form method="post" action="searchAuthor" id="searchAutor">
+                <label for="author"><br>Autor:</br></label>
+                <input type="text" name="author" id="author">
                 <input type="submit" name="Submit">
                 <br>
         </form>
     </body>
 </html>
-
-  
-    
