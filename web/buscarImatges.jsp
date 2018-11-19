@@ -17,6 +17,6 @@
         <a href="buscarAutor.jsp" id="refToBuscarAutor">Buscar imatge per Autor</a></br>
         <a href="buscarTit.jsp" id="refToBuscarTitol">Buscar imatge per Titol</a></br>
         <a href="buscarData.jsp" id="refToBuscarData">Buscar imatge per Data</a></br>
-        <a href="buscarClau.jsp" id="refToBuscarKeyWords">Buscar imatge per parules clau</a>
+        <a href="buscarClau.jsp" id="refToBuscarKeyWords">Buscar imatge per paraules clau</a>
     </body>
 </html>

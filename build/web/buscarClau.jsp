@@ -14,7 +14,7 @@
     <body>
         <h1>Buscar imatges per paraules clau</h1>
         <form method="post" action="searchKeywords" id="searchKeywords">
-                <label for="keywords"><br>Data:</br></label>
+                <label for="keywords"><br>Paraules clau:</br></label>
                 <input type="text" name="keywords" id="keywords">
                 <input type="submit" name="Submit">
                 <br>
