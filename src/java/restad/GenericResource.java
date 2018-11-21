@@ -101,7 +101,7 @@ public class GenericResource {
            //conn = DriverManager.getConnection("jdbc:sqlite:F:\\windows\\ADPractica4\\loquesea.db");
            conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
            
-           String uploadedFileLocation = "/Users/Jordi/NetBeansProjects/ImRest/imatges/" + title + id + ".jpeg";
+           String uploadedFileLocation = "/Users/Jordi/NetBeansProjects/ImRest/web/imatges/" + title + id + ".jpeg";
            writeToFile(uploadedInputStream, uploadedFileLocation);
            
            PreparedStatement statement = conn.prepareStatement("insert into imagenes values (?, ?, ?, ?, ?, ? , ?)");
@@ -128,7 +128,7 @@ public class GenericResource {
                 System.err.println(e.getMessage());
             }
         }
-        html = html + htmfini;
+        html = html + "<a href=\"../../index.html\" id=\"refToMenu\">Tornar al menu</a>"+htmfini;
         return html;
     }
     /**
