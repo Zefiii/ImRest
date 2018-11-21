@@ -15,7 +15,10 @@
         <div>
             <h1 id="headerRegistreImatge">Registrar imatge</h1>
             <p id="dades"><strong>Introdueix les dades que es demanen a continuació</strong></p>
-            <form method="post" action="webresources/generic/register" id="registrarImatge">
+            <form method="post" action="webresources/generic/register" id="registrarImatge" enctype="multipart/form-data">
+                <p>
+                    Seleccionar imatge:<br><input type="file" name="file">
+                </p>
                 <label for="title"><br>Títol:<br></label>
                 <input type="text" name="title" id="title">
                 <br>

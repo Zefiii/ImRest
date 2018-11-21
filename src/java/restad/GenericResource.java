@@ -28,6 +28,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -59,6 +60,7 @@ public class GenericResource {
     public String getHtml() {
         return "<html><head/><body><h1>Hello World </h1></body></html";
     }
+    
     /**
      * POST method to register a new image
      * @param title
@@ -66,17 +68,19 @@ public class GenericResource {
      * @param keywords
      * @param author
      * @param crea_date
+     * @param uploadedInputStream
+     * @param fileDetail
      * @return
      */
     @Path("register")
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.TEXT_HTML)
-    public String registerImage(@FormParam("title") String title,
-            @FormParam("description") String description,
-            @FormParam("keywords") String keywords,
-            @FormParam("author") String author,
-            @FormParam("creation") String crea_date,
+    public String registerImage(@FormDataParam("title") String title,
+            @FormDataParam("description") String description,
+            @FormDataParam("keywords") String keywords,
+            @FormDataParam("author") String author,
+            @FormDataParam("creation") String crea_date,
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetail){
          //TODO write your implementation code here:
@@ -96,6 +100,10 @@ public class GenericResource {
            //conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
            //conn = DriverManager.getConnection("jdbc:sqlite:F:\\windows\\ADPractica4\\loquesea.db");
            conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
+           
+           String uploadedFileLocation = "/Users/Jordi/NetBeansProjects/ImRest/imatges/" + title + id + ".jpeg";
+           writeToFile(uploadedInputStream, uploadedFileLocation);
+           
            PreparedStatement statement = conn.prepareStatement("insert into imagenes values (?, ?, ?, ?, ?, ? , ?)");
            statement.setString(1,id );
            statement.setString(2, "Jordi");
@@ -213,11 +221,20 @@ public class GenericResource {
            //conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
            conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
            
-           PreparedStatement statement =  conn.prepareStatement("delete from imagenes where id_imagen = ?");
+           PreparedStatement statement =  conn.prepareStatement("select * from imagenes where id_imagen = ?");
+           statement.setString(1,id);
+           ResultSet rs = statement.executeQuery();
+           String titol = rs.getString("titulo");
+           String id_imatge = rs.getString("id_imagen");
+               
+           
+           File imatge = new File("imatges/" + titol + id_imatge + ".jpeg");
+           
+           statement =  conn.prepareStatement("delete from imagenes where id_imagen = ?");
            statement.setString(1, id);
            statement.executeUpdate();
-                      statement.executeUpdate();
-            html = html + "<h1>Esborrat Correcte :)!</h1>";
+           statement.executeUpdate();
+           html = html + "<h1>Esborrat Correcte :)!</h1>";
         }
         catch(SQLException ex){
             System.out.println(ex);
@@ -264,6 +281,7 @@ public class GenericResource {
            String clau;
            String autor;
            String creacio;
+           String path_imatge;
            html = html + "<h1>Llistat Correcte :)!</h1>"; 
            
            PreparedStatement statement =  conn.prepareStatement("select * from imagenes");
@@ -277,8 +295,9 @@ public class GenericResource {
                clau = rs.getString("palabras_clave");
                autor = rs.getString("autor");
                creacio = rs.getString("creacion");
-               
+               path_imatge = "../../imatges/" + titol + id_imatge + ".jpeg";
                html = html + "<div><h2>" + titol +"</h2>"
+                       + "<img src=\"" + path_imatge + "\" alt=" + titol + ">"
                        +"<p>Descripcio: " + descripcio +"</p>"
                        +"<p>Autor: " + autor +"</p>"
                        +"<p>Data de creacio: " + creacio +"</p></div></br></br>";
