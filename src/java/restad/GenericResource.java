@@ -219,16 +219,7 @@ public class GenericResource {
            //conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
            conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
            
-           PreparedStatement statement =  conn.prepareStatement("select * from imagenes where id_imagen = ?");
-           statement.setString(1,id);
-           ResultSet rs = statement.executeQuery();
-           String titol = rs.getString("titulo");
-           String id_imatge = rs.getString("id_imagen");
-               
-           
-           File imatge = new File("imatges/" + titol + id_imatge + ".jpeg");
-           
-           statement =  conn.prepareStatement("delete from imagenes where id_imagen = ?");
+           PreparedStatement statement =  conn.prepareStatement("delete from imagenes where id_imagen = ?");
            statement.setString(1, id);
            statement.executeUpdate();
            statement.executeUpdate();
@@ -237,6 +228,9 @@ public class GenericResource {
         catch(SQLException ex){
             System.out.println(ex);
             html = html + "<h1>Esborrat Incorrecte :(!</h1>";
+        }
+        catch(Exception e) {
+            System.err.println(e.getMessage());
         }
         finally{
             try{
@@ -333,6 +327,7 @@ public class GenericResource {
     public String SearchByID (@PathParam("id") int id){
         Connection conn = null;
         String html = htmini;
+        String path_imatge;
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException ex) {
@@ -348,14 +343,15 @@ public class GenericResource {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if(rs.next()){
-                html = html + "<div>"
-                        + "<h2>Titol: " + rs.getString("titulo") + "</h2><br>"
+                path_imatge = "../../../imatges/" + rs.getString("titulo") + rs.getString("id_imagen") + ".jpeg";
+                html = html + "<div><h2>" + rs.getString("titulo") +"</h2>"
+                       + "<img src=\"" + path_imatge + "\" alt=" + rs.getString("titulo") + ">"
                         + "<p>Autor: " + rs.getString("autor") + "<p><br>"
                         + "<p>" + rs.getString("descripcion") + "</p> <br>"
                         + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>"
                         + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>"
                         + "</div>"
-                        + "<form action=\"../../modificarImatge.jsp\" method=\"post\">"
+                        + "<form action=\"../../../modificarImatge.jsp\" method=\"post\">"
                         + "<input type=\"hidden\" value=\"" + id + "\" name=\"id_imatge\" id=\"id_imatge\">"
                         + "<input type=\"submit\" value=\"Modificar imatge\"></form>"
                         + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini;
@@ -387,6 +383,7 @@ public class GenericResource {
     @Produces(MediaType.TEXT_HTML)
     public String searchByTitle(@PathParam("title") String title){
         String html = htmini;
+        String path_imatge;
         Connection conn = null;
         try {
             Class.forName("org.sqlite.JDBC");
@@ -401,8 +398,9 @@ public class GenericResource {
             statement.setString(1, title);
             ResultSet rs = statement.executeQuery();
             if(rs.next()){
-                html = html + "<div>"
-                        + "<h2>Titol: " + rs.getString("titulo") + "</h2><br>"
+                path_imatge = "../../../imatges/" + rs.getString("titulo") + rs.getString("id_imagen") + ".jpeg";
+                html = html + "<div><h2>" + rs.getString("titulo") +"</h2>"
+                        + "<img src=\"" + path_imatge + "\" alt=" + rs.getString("titulo") + ">"
                         + "<p>Autor: " + rs.getString("autor") + "<p><br>"
                         + "<p>" + rs.getString("descripcion") + "</p> <br>"
                         + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>"
@@ -411,9 +409,10 @@ public class GenericResource {
                         + "<form action=\"../../../modificarImatge.jsp\" method=\"post\">"
                         + "<input type=\"hidden\" value=\"" + rs.getString("id_imagen") + "\" name=\"id_imatge\" id=\"id_imatge\">"
                         + "<input type=\"submit\" value=\"Modificar imatge\"></form>";
-                while (rs.next()) {                
-                    html = html + "<div>"
-                        + "<h2>Titol: " + rs.getString("titulo") + "</h2><br>"
+                while (rs.next()) {
+                    path_imatge = "../../../imatges/" + rs.getString("titulo") + rs.getString("id_imagen") + ".jpeg";
+                    html = html + "<div><h2>" + rs.getString("titulo") +"</h2>"
+                        + "<img src=\"" + path_imatge + "\" alt=" + rs.getString("titulo") + ">"
                         + "<p>Autor: " + rs.getString("autor") + "<p><br>"
                         + "<p>" + rs.getString("descripcion") + "</p> <br>"
                         + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>"
@@ -454,6 +453,7 @@ public class GenericResource {
     @Produces(MediaType.TEXT_HTML)
     public String searchCreationDate(@PathParam("date") String date){
         String html = htmini;
+        String path_imatge;
         Connection conn = null;
         try {
             Class.forName("org.sqlite.JDBC");
@@ -470,30 +470,39 @@ public class GenericResource {
             
             ResultSet rs = statement.executeQuery();
             if(rs.next()){
-                html = html + "<div>";
-                    html = html + "<h2>Titol: " + rs.getString("titulo") + "</h2><br>";
-                    html = html + "<p>Autor: " + rs.getString("autor") + "<p><br>";
-                    html = html + "<p>" + rs.getString("descripcion") + "</p> <br>";
-                    html = html + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>";
-                    html = html + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>";
-                    html = html + "</div>";
-                while (rs.next()) {                
-                    html = html + "<div>";
-                    html = html + "<h2>Titol: " + rs.getString("titulo") + "</h2><br>";
-                    html = html + "<p>Autor: " + rs.getString("autor") + "<p><br>";
-                    html = html + "<p>" + rs.getString("descripcion") + "</p> <br>";
-                    html = html + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>";
-                    html = html + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>";
-                    html = html + "</div>";
+                path_imatge = "../../../imatges/" + rs.getString("titulo") + rs.getString("id_imagen") + ".jpeg";
+                html = html + "<div><h2>" + rs.getString("titulo") +"</h2>"
+                       + "<img src=\"" + path_imatge + "\" alt=" + rs.getString("titulo") + ">"
+                            + "<p>Autor: " + rs.getString("autor") + "<p><br>"
+                            + "<p>" + rs.getString("descripcion") + "</p> <br>"
+                            + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>"
+                            + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>"
+                            + "</div>"
+                        + "<form action=\"../../../modificarImatge.jsp\" method=\"post\">"
+                        + "<input type=\"hidden\" value=\"" + rs.getString("id_imagen") + "\" name=\"id_imatge\" id=\"id_imatge\">"
+                        + "<input type=\"submit\" value=\"Modificar imatge\"></form>"
+                        + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini;
+                while (rs.next()) {
+                    path_imatge = "../../../imatges/" + rs.getString("titulo") + rs.getString("id_imagen") + ".jpeg";
+                    html = html + "<div><h2>" + rs.getString("titulo") +"</h2>"
+                            + "<img src=\"" + path_imatge + "\" alt=" + rs.getString("titulo") + ">"
+                            + "<p>Autor: " + rs.getString("autor") + "<p><br>"
+                            + "<p>" + rs.getString("descripcion") + "</p> <br>"
+                            + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>"
+                            + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>"
+                            + "</div>"
+                            + "<form action=\"../../../modificarImatge.jsp\" method=\"post\">"
+                            + "<input type=\"hidden\" value=\"" + rs.getString("id_imagen") + "\" name=\"id_imatge\" id=\"id_imatge\">"
+                            + "<input type=\"submit\" value=\"Modificar imatge\"></form>"
+                            + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini;
                 }
-                html = html + "<a href=\"../../index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini; 
             }
             else html = "<html></header><body><h1> No hi ha cap Imatge amb aquesta data de creacio o hi ha hagut un error</h1></body></html>"
-                    + "<a href=\"../../index.html\" id=\"refToMenu\">Tornar al menu</a>";
+                    + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a>";
         } catch(SQLException e) {
             System.out.println(e);
             html = "<html></header><body><h1> No hi ha cap Imatge amb aquesta data de creacio o hi ha hagut un error</h1>"
-                    + "<a href=\"../../index.html\" id=\"refToMenu\">Tornar al menu</a></body></html>";
+                    + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a></body></html>";
         }  
         finally{
             try{
@@ -516,6 +525,7 @@ public class GenericResource {
     @Produces(MediaType.TEXT_HTML)
     public String searchByAuthor(@PathParam("author") String author){
         String html = htmini;
+        String path_imatge;
         Connection conn = null;
         try {
             Class.forName("org.sqlite.JDBC");
@@ -532,30 +542,39 @@ public class GenericResource {
             
             ResultSet rs = statement.executeQuery();
             if(rs.next()){
-                html = html + "<div>";
-                    html = html + "<h2>Titol: " + rs.getString("titulo") + "</h2><br>";
-                    html = html + "<p>Autor: " + rs.getString("autor") + "<p><br>";
-                    html = html + "<p>" + rs.getString("descripcion") + "</p> <br>";
-                    html = html + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>";
-                    html = html + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>";
-                    html = html + "</div>";
-                while (rs.next()) {                
-                    html = html + "<div>";
-                    html = html + "<h2>Titol: " + rs.getString("titulo") + "</h2><br>";
-                    html = html + "<p>Autor: " + rs.getString("autor") + "<p><br>";
-                    html = html + "<p>" + rs.getString("descripcion") + "</p> <br>";
-                    html = html + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>";
-                    html = html + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>";
-                    html = html + "</div>";
+                path_imatge = "../../../imatges/" + rs.getString("titulo") + rs.getString("id_imagen") + ".jpeg";
+                html = html + "<div><h2>" + rs.getString("titulo") +"</h2>"
+                            + "<img src=\"" + path_imatge + "\" alt=" + rs.getString("titulo") + ">"
+                            + "<p>Autor: " + rs.getString("autor") + "<p><br>"
+                            + "<p>" + rs.getString("descripcion") + "</p> <br>"
+                            + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>"
+                            + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>"
+                            + "</div>"
+                            + "<form action=\"../../../modificarImatge.jsp\" method=\"post\">"
+                            + "<input type=\"hidden\" value=\"" + rs.getString("id_imagen") + "\" name=\"id_imatge\" id=\"id_imatge\">"
+                            + "<input type=\"submit\" value=\"Modificar imatge\"></form>"
+                            + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini;
+                while (rs.next()) {
+                path_imatge = "../../../imatges/" + rs.getString("titulo") + rs.getString("id_imagen") + ".jpeg";
+                html = html + "<div><h2>" + rs.getString("titulo") +"</h2>"
+                       + "<img src=\"" + path_imatge + "\" alt=" + rs.getString("titulo") + ">"
+                            + "<p>Autor: " + rs.getString("autor") + "<p><br>"
+                            + "<p>" + rs.getString("descripcion") + "</p> <br>"
+                            + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>"
+                            + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>"
+                            + "</div>"
+                            + "<form action=\"../../../modificarImatge.jsp\" method=\"post\">"
+                            + "<input type=\"hidden\" value=\"" + rs.getString("id_imagen") + "\" name=\"id_imatge\" id=\"id_imatge\">"
+                            + "<input type=\"submit\" value=\"Modificar imatge\"></form>"
+                            + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini;
                 }
-                html = html + "<a href=\"../../index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini; 
             }
             else html = "<html></header><body><h1> No hi ha cap Imatge amb aquest autor o hi ha hagut un error</h1></body></html>"
-                    + "<a href=\"../../index.html\" id=\"refToMenu\">Tornar al menu</a>";
+                    + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a>";
         } catch(SQLException e) {
             System.out.println(e);
             html = "<html></header><body><h1> No hi ha cap Imatge amb aquest autor o hi ha hagut un error</h1>"
-                    + "<a href=\"../../index.html\" id=\"refToMenu\">Tornar al menu</a></body></html>";
+                    + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a></body></html>";
         }
         finally{
             try{
@@ -578,6 +597,7 @@ public class GenericResource {
     @Produces(MediaType.TEXT_HTML)
     public String searchByKeywords(@PathParam("keywords") String keywords){
         String html = htmini;
+        String path_imatge;
         Connection conn = null;
         try {
             Class.forName("org.sqlite.JDBC");
@@ -596,30 +616,39 @@ public class GenericResource {
             if(rs.next()){
                 if(rs.getString("palabras_clave").contains(keywords)){
                     trobat = true;
-                    html = html + "<div>";
-                    html = html + "<h2>Titol: " + rs.getString("titulo") + "</h2><br>";
-                    html = html + "<p>Autor: " + rs.getString("autor") + "<p><br>";
-                    html = html + "<p>" + rs.getString("descripcion") + "</p> <br>";
-                    html = html + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>";
-                    html = html + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>";
-                    html = html + "</div>";
+                    path_imatge = "../../../imatges/" + rs.getString("titulo") + rs.getString("id_imagen") + ".jpeg";
+                    html = html + "<div><h2>" + rs.getString("titulo") +"</h2>"
+                       + "<img src=\"" + path_imatge + "\" alt=" + rs.getString("titulo") + ">"
+                            + "<p>Autor: " + rs.getString("autor") + "<p><br>"
+                            + "<p>" + rs.getString("descripcion") + "</p> <br>"
+                            + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>"
+                            + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>"
+                            + "</div>"
+                            + "<form action=\"../../../modificarImatge.jsp\" method=\"post\">"
+                            + "<input type=\"hidden\" value=\"" + rs.getString("id_imagen") + "\" name=\"id_imatge\" id=\"id_imatge\">"
+                            + "<input type=\"submit\" value=\"Modificar imatge\"></form>"
+                            + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini;
                 }
                 while (rs.next()) {     
                     if(rs.getString("palabras_clave").contains(keywords)){
                         trobat = true;
-                        html = html + "<div>";
-                        html = html + "<h2>Titol: " + rs.getString("titulo") + "</h2><br>";
-                        html = html + "<p>Autor: " + rs.getString("autor") + "<p><br>";
-                        html = html + "<p>" + rs.getString("descripcion") + "</p> <br>";
-                        html = html + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>";
-                        html = html + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>";
-                        html = html + "</div>";
+                        path_imatge = "../../../imatges/" + rs.getString("titulo") + rs.getString("id_imagen") + ".jpeg";
+                        html = html + "<div><h2>" + rs.getString("titulo") +"</h2>"
+                                + "<img src=\"" + path_imatge + "\" alt=" + rs.getString("titulo") + ">"
+                                + "<p>Autor: " + rs.getString("autor") + "<p><br>"
+                                + "<p>" + rs.getString("descripcion") + "</p> <br>"
+                                + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>"
+                                + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>"
+                                + "</div>"
+                                + "<form action=\"../../../modificarImatge.jsp\" method=\"post\">"
+                                + "<input type=\"hidden\" value=\"" + rs.getString("id_imagen") + "\" name=\"id_imatge\" id=\"id_imatge\">"
+                                + "<input type=\"submit\" value=\"Modificar imatge\"></form>"
+                                + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini;
                     } 
                 }
-                html = html + "<a href=\"../../index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini; 
             }
             else if(!trobat) html = "<html></header><body><h1> No hi ha cap Imatge amb aquestes paraules clau o hi ha hagut un error</h1></body></html>"
-                    + "<a href=\"../../index.html\" id=\"refToMenu\">Tornar al menu</a>";
+                    + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a>";
         } catch(SQLException e) {
             System.out.println(e);
             html = "<html></header><body><h1> No hi ha cap Imatge amb aquestes paraules clau o hi ha hagut un error</h1>"
