@@ -97,11 +97,11 @@ public class GenericResource {
         try{
             Random ran = new Random();
             String id = String.valueOf(ran.nextInt(10000)+1);
-           //conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
+           conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
            //conn = DriverManager.getConnection("jdbc:sqlite:F:\\windows\\ADPractica4\\loquesea.db");
-           conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
+           //conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
            
-           String uploadedFileLocation = "/Users/Jordi/NetBeansProjects/ImRest/web/imatges/" + title + id + ".jpeg";
+           String uploadedFileLocation = "F:\\Oriol\\Documents\\Uni\\AD\\ImRest\\web\\imatges\\" + title + id + ".jpeg";
            writeToFile(uploadedInputStream, uploadedFileLocation);
            
            PreparedStatement statement = conn.prepareStatement("insert into imagenes values (?, ?, ?, ?, ?, ? , ?)");
@@ -128,7 +128,7 @@ public class GenericResource {
                 System.err.println(e.getMessage());
             }
         }
-        html = html + "<a href=\"../../index.html\" id=\"refToMenu\">Tornar al menu</a>"+htmfini;
+        html = html + "<a href=\"http://localhost:8080/ClientREST/index.html\" id=\"refToMenu\">Tornar al menu</a>"+htmfini;
         return html;
     }
     /**
@@ -161,8 +161,8 @@ public class GenericResource {
         }
         try{
            //conn = DriverManager.getConnection("jdbc:sqlite:F:\\windows\\ADPractica4\\loquesea.db");                
-           //conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
-           conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
+           conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
+           //conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
            
            PreparedStatement statement = conn.prepareStatement("update imagenes set titulo = ?, descripcion = ?, palabras_clave = ?, autor = ? where id_imagen = ?;");
            statement.setString(1, title);
@@ -191,7 +191,7 @@ public class GenericResource {
                 System.err.println(e.getMessage());
             }
         }
-        html = html + "<a href=\"../../index.html\" id=\"refToMenu\">Tornar al menu</a>"+htmfini;
+        html = html + "<a href=\"http://localhost:8080/ClientREST/index.html\" id=\"refToMenu\">Tornar al menu</a>"+htmfini;
         return html;
     }
     
@@ -216,8 +216,8 @@ public class GenericResource {
         }
         try{
            //conn = DriverManager.getConnection("jdbc:sqlite:F:\\windows\\ADPractica4\\loquesea.db");                
-           //conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
-           conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
+           conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
+           //conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
            
            PreparedStatement statement =  conn.prepareStatement("delete from imagenes where id_imagen = ?");
            statement.setString(1, id);
@@ -241,7 +241,7 @@ public class GenericResource {
                 System.err.println(e.getMessage());
             }
         }
-        html = html + htmfini;
+         html = html + "<a href=\"http://localhost:8080/ClientREST/index.html\" id=\"refToMenu\">Tornar al menu</a>"+htmfini;
         return html;
     }
         
@@ -264,8 +264,8 @@ public class GenericResource {
         }
         try{
            //conn = DriverManager.getConnection("jdbc:sqlite:F:\\windows\\ADPractica4\\loquesea.db");                
-           //conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
-           conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
+           conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
+           //conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
            
            String id_imatge;
            String titol;
@@ -297,12 +297,12 @@ public class GenericResource {
                        + "<input type=\"hidden\" value=\"" + id_imatge + "\" name=\"id_imatge\" id=\"id_imatge\">"
                        + "<input type=\"submit\" value=\"Modificar imatge\"></form>";
            }
-        html = html + "<a href=\"../../index.html\" id=\"refToMenu\">Tornar al menu</a>"+htmfini;
+        html = html + "<a href=\"http://localhost:8080/ClientREST/index.html\" id=\"refToMenu\">Tornar al menu</a>"+htmfini;
                       
         } catch(SQLException e){
               System.err.println(e.getMessage());
               html = "<html><head/><body><h1>Llistar Incorrecte :(!</h1></body></html>"
-                      + "<a href=\"../../index.html\" id=\"refToMenu\">Tornar al menu</a>";
+                      + "<a href=\"http://localhost:8080/ClientREST/index.html\">Tornar al menu</a>";
 
         } 
         finally{
@@ -336,9 +336,9 @@ public class GenericResource {
         try{
             System.out.println(id);
             //conn = DriverManager.getConnection("jdbc:sqlite:F:\\windows\\ADPractica4\\loquesea.db"); 
-            //conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
+            conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
             //conn = DriverManager.getConnection("jdbc:sqlite:\\Users\\oriol\\OneDrive\\Escritorio\\loquesea.db");
-            conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
+            //conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
             PreparedStatement statement =  conn.prepareStatement("select * from imagenes where id_imagen = ?"); 
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
@@ -351,16 +351,16 @@ public class GenericResource {
                         + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>"
                         + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>"
                         + "</div>"
-                        + "<form action=\"../../../modificarImatge.jsp\" method=\"post\">"
+                        + "<form action=\"http://localhost:8080/ClientREST/modificarImatge.jsp\" method=\"post\">"
                         + "<input type=\"hidden\" value=\"" + id + "\" name=\"id_imatge\" id=\"id_imatge\">"
                         + "<input type=\"submit\" value=\"Modificar imatge\"></form>"
-                        + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini;
+                        + "<a href=\"http://localhost:8080/ClientREST/index.html\">Tornar al menu</a>" + htmfini;
             }
         }
         catch(SQLException e){
             System.out.println(e);
             html = "<html></header><body><h1> No hi ha cap Imatge amb aquest ID o hi ha hagut un error</h1>"
-                    + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a></body></html>";
+                    + "<a href=\"http://localhost:8080/ClientREST/index.html\">Tornar al menu</a></body></html>";
         }
         finally{
             try{
@@ -391,9 +391,9 @@ public class GenericResource {
             System.out.println("Error class.forname");
         }
         try{
-            //conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
+            conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
             //conn = DriverManager.getConnection("jdbc:sqlite:\\Users\\oriol\\OneDrive\\Escritorio\\loquesea.db");
-            conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
+            //conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
             PreparedStatement statement =  conn.prepareStatement("select * from imagenes where titulo = ?"); 
             statement.setString(1, title);
             ResultSet rs = statement.executeQuery();
@@ -406,7 +406,7 @@ public class GenericResource {
                         + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>"
                         + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>"
                         + "</div>"
-                        + "<form action=\"../../../modificarImatge.jsp\" method=\"post\">"
+                        + "<form action=\"http://localhost:8080/ClientREST/modificarImatge.jsp\" method=\"post\">"
                         + "<input type=\"hidden\" value=\"" + rs.getString("id_imagen") + "\" name=\"id_imatge\" id=\"id_imatge\">"
                         + "<input type=\"submit\" value=\"Modificar imatge\"></form>";
                 while (rs.next()) {
@@ -418,19 +418,19 @@ public class GenericResource {
                         + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>"
                         + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>"
                         + "</div>"
-                        + "<form action=\"../../../modificarImatge.jsp\" method=\"post\">"
+                        + "<form action=\"http://localhost:8080/ClientREST/modificarImatge.jsp\" method=\"post\">"
                         + "<input type=\"hidden\" value=\"" + rs.getString("id_imagen") + "\" name=\"id_imatge\" id=\"id_imatge\">"
                         + "<input type=\"submit\" value=\"Modificar imatge\"></form>";
                 }
-                html = html + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini; 
+                 html = html + "<a href=\"http://localhost:8080/ClientREST/index.html\" id=\"refToMenu\">Tornar al menu</a>"+htmfini; 
             }
             else html = "<html></header><body><h1> No hi ha cap Imatge amb aquest titol o hi ha hagut un error</h1>"
-                    + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a></body></html>";
+                    + "<a href=\"http://localhost:8080/ClientREST/index.html\" id=\"refToMenu\">Tornar al menu</a></body></html>";
       
         } catch(SQLException e) {
             System.out.println(e);
             html = "<html></header><body><h1> No hi ha cap Imatge amb aquest titol o hi ha hagut un error</h1>"
-                    + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a></body></html>";
+                    + "<a href=\"http://localhost:8080/ClientREST/index.html\" id=\"refToMenu\">Tornar al menu</a></body></html>";
         }
         finally{
             try{
@@ -461,9 +461,9 @@ public class GenericResource {
             System.out.println("Error class.forname");
         }
         try{
-            //conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
+            conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
             //conn = DriverManager.getConnection("jdbc:sqlite:\\Users\\oriol\\OneDrive\\Escritorio\\loquesea.db");
-            conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
+            //conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
             PreparedStatement statement =  conn.prepareStatement("select * from imagenes where creacion = ?"); 
             statement.setString(1, date);
             
@@ -478,10 +478,10 @@ public class GenericResource {
                             + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>"
                             + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>"
                             + "</div>"
-                        + "<form action=\"../../../modificarImatge.jsp\" method=\"post\">"
+                        + "<form action=\"http://localhost:8080/ClientREST/modificarImatge.jsp\" method=\"post\">"
                         + "<input type=\"hidden\" value=\"" + rs.getString("id_imagen") + "\" name=\"id_imatge\" id=\"id_imatge\">"
                         + "<input type=\"submit\" value=\"Modificar imatge\"></form>"
-                        + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini;
+                        + "<a href=\"http://localhost:8080/ClientREST/index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini;
                 while (rs.next()) {
                     path_imatge = "../../../imatges/" + rs.getString("titulo") + rs.getString("id_imagen") + ".jpeg";
                     html = html + "<div><h2>" + rs.getString("titulo") +"</h2>"
@@ -491,18 +491,18 @@ public class GenericResource {
                             + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>"
                             + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>"
                             + "</div>"
-                            + "<form action=\"../../../modificarImatge.jsp\" method=\"post\">"
+                            + "<form action=\"http://localhost:8080/ClientREST/modificarImatge.jsp\" method=\"post\">"
                             + "<input type=\"hidden\" value=\"" + rs.getString("id_imagen") + "\" name=\"id_imatge\" id=\"id_imatge\">"
                             + "<input type=\"submit\" value=\"Modificar imatge\"></form>"
-                            + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini;
+                            + "<a href=\"http://localhost:8080/ClientREST/index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini;
                 }
             }
             else html = "<html></header><body><h1> No hi ha cap Imatge amb aquesta data de creacio o hi ha hagut un error</h1></body></html>"
-                    + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a>";
+                    + "<a href=\"http://localhost:8080/ClientREST/index.html\" id=\"refToMenu\">Tornar al menu</a>";
         } catch(SQLException e) {
             System.out.println(e);
             html = "<html></header><body><h1> No hi ha cap Imatge amb aquesta data de creacio o hi ha hagut un error</h1>"
-                    + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a></body></html>";
+                    + "<a href=\"http://localhost:8080/ClientREST/index.html\" id=\"refToMenu\">Tornar al menu</a></body></html>";
         }  
         finally{
             try{
@@ -533,9 +533,9 @@ public class GenericResource {
             System.out.println("Error class.forname");
         }
         try{
-            //conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
+            conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
             //conn = DriverManager.getConnection("jdbc:sqlite:\\Users\\oriol\\OneDrive\\Escritorio\\loquesea.db");
-            conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
+            //conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
             PreparedStatement statement =  conn.prepareStatement("select * from imagenes where autor = ?"); 
             statement.setString(1, author);
             
@@ -550,10 +550,10 @@ public class GenericResource {
                             + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>"
                             + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>"
                             + "</div>"
-                            + "<form action=\"../../../modificarImatge.jsp\" method=\"post\">"
+                            + "<form action=\"http://localhost:8080/ClientREST/modificarImatge.jsp\" method=\"post\">"
                             + "<input type=\"hidden\" value=\"" + rs.getString("id_imagen") + "\" name=\"id_imatge\" id=\"id_imatge\">"
                             + "<input type=\"submit\" value=\"Modificar imatge\"></form>"
-                            + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini;
+                            + "<a href=\"http://localhost:8080/ClientREST/index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini;
                 while (rs.next()) {
                 path_imatge = "../../../imatges/" + rs.getString("titulo") + rs.getString("id_imagen") + ".jpeg";
                 html = html + "<div><h2>" + rs.getString("titulo") +"</h2>"
@@ -563,18 +563,18 @@ public class GenericResource {
                             + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>"
                             + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>"
                             + "</div>"
-                            + "<form action=\"../../../modificarImatge.jsp\" method=\"post\">"
+                            + "<form action=\"http://localhost:8080/ClientREST/modificarImatge.jsp\" method=\"post\">"
                             + "<input type=\"hidden\" value=\"" + rs.getString("id_imagen") + "\" name=\"id_imatge\" id=\"id_imatge\">"
                             + "<input type=\"submit\" value=\"Modificar imatge\"></form>"
-                            + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini;
+                            + "<a href=\"http://localhost:8080/ClientREST/index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini;
                 }
             }
             else html = "<html></header><body><h1> No hi ha cap Imatge amb aquest autor o hi ha hagut un error</h1></body></html>"
-                    + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a>";
+                    + "<a href=\"http://localhost:8080/ClientREST/index.html\" id=\"refToMenu\">Tornar al menu</a>";
         } catch(SQLException e) {
             System.out.println(e);
             html = "<html></header><body><h1> No hi ha cap Imatge amb aquest autor o hi ha hagut un error</h1>"
-                    + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a></body></html>";
+                    + "<a href=\"http://localhost:8080/ClientREST/index.html\" id=\"refToMenu\">Tornar al menu</a></body></html>";
         }
         finally{
             try{
@@ -605,9 +605,9 @@ public class GenericResource {
             System.out.println("Error class.forname");
         }
         try{
-            //conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
+            conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Oriol\\Desktop\\basedades.db");
             //conn = DriverManager.getConnection("jdbc:sqlite:\\Users\\oriol\\OneDrive\\Escritorio\\loquesea.db");
-            conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
+            //conn = DriverManager.getConnection("jdbc:sqlite:/Users/Jordi/Desktop/loquesea.db");
             PreparedStatement statement =  conn.prepareStatement("select * from imagenes"); 
             
             
@@ -624,10 +624,10 @@ public class GenericResource {
                             + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>"
                             + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>"
                             + "</div>"
-                            + "<form action=\"../../../modificarImatge.jsp\" method=\"post\">"
+                            + "<form action=\"http://localhost:8080/ClientREST/modificarImatge.jsp\" method=\"post\">"
                             + "<input type=\"hidden\" value=\"" + rs.getString("id_imagen") + "\" name=\"id_imatge\" id=\"id_imatge\">"
                             + "<input type=\"submit\" value=\"Modificar imatge\"></form>"
-                            + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini;
+                            + "<a href=\"http://localhost:8080/ClientREST/index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini;
                 }
                 while (rs.next()) {     
                     if(rs.getString("palabras_clave").contains(keywords)){
@@ -640,19 +640,19 @@ public class GenericResource {
                                 + "<p>Paraules clau: " + rs.getString("palabras_clave") +  "</p><br>"
                                 + "<p>Data de creacio: " + rs.getString("creacion") + "</p><br>"
                                 + "</div>"
-                                + "<form action=\"../../../modificarImatge.jsp\" method=\"post\">"
+                                + "<form action=\"http://localhost:8080/ClientREST/modificarImatge.jsp\" method=\"post\">"
                                 + "<input type=\"hidden\" value=\"" + rs.getString("id_imagen") + "\" name=\"id_imatge\" id=\"id_imatge\">"
                                 + "<input type=\"submit\" value=\"Modificar imatge\"></form>"
-                                + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini;
+                                + "<a href=\"http://localhost:8080/ClientREST/index.html\" id=\"refToMenu\">Tornar al menu</a>" + htmfini;
                     } 
                 }
             }
             else if(!trobat) html = "<html></header><body><h1> No hi ha cap Imatge amb aquestes paraules clau o hi ha hagut un error</h1></body></html>"
-                    + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a>";
+                    + "<a href=\"http://localhost:8080/ClientREST/index.html\" id=\"refToMenu\">Tornar al menu</a>";
         } catch(SQLException e) {
             System.out.println(e);
             html = "<html></header><body><h1> No hi ha cap Imatge amb aquestes paraules clau o hi ha hagut un error</h1>"
-                    + "<a href=\"../../../index.html\" id=\"refToMenu\">Tornar al menu</a></body></html>";
+                    + "<a href=\"http://localhost:8080/ClientREST/index.html\" id=\"refToMenu\">Tornar al menu</a></body></html>";
         }  
         finally{
             try{
